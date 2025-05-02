@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoodTrick Sensi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="particle-background"></canvas>
+
+    <!-- Audio BGM -->
+    <audio id="background-audio" autoplay loop preload="auto">
+        <source src="sound.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung audio HTML5.
+    </audio>
+
+    <!-- Loading Section dengan Logo -->
+    <div id="loading-container">
+        <div id="loading-content">
+            <img src="LOGO.jpg" alt="GoodTrick Logo" class="loading-logo">
+            <div class="progress"><div class="color"></div></div>
+        </div>
+    </div>
+
+    <div id="main-content" class="hidden">
+        <!-- Welcome Section -->
+        <div id="welcome-container">
+            <h1 class="welcome-title typing-animation">SELAMAT DATANG</h1>
+            <h2 class="goodtrick-title typing-animation">GOODTRICK SENSI</h2>
+            <p class="experience-text typing-animation">TEMPAT TERBAIK UNTUK</p>
+            <p class="best-experience-text typing-animation">PENGALAMAN TERBAIK</p>
+        </div>
+
+        <!-- Button Section -->
+        <div class="button-container-vertical">
+            <button class="brevent-btn">
+                <img src="brevent.png" alt="Brevent Icon" class="button-icon">
+                <span>Brevent</span>
+            </button>
+
+            <button class="cli-btn">
+                <img src="python.png" alt="CLI Icon" class="button-icon">
+                <span>CLI</span>
+            </button>
+        </div>
+
+        <!-- Info Tables -->
+        <table align="center" border="1" style="margin: 20px auto; background-color: rgba(0,0,0,0.6); color: white;">
+            <tr>
+                <td>
+                    <h3 style="color: red; font-size: 24px; font-weight: bold;">APA ITU GOODTRICK?</h3>
+                    <img src="asset/LOGO.jpg" alt="GoodTrick Logo" class="content-logo">
+                    <p>GOODTRICK ADALAH FILE SENSI YANG DI BUNGKUS DALAM MODUL SHELL DAN PYTHON YANG DI DEVLOP DENGAN PERHITUNGAN YANG MATANG UNTUK ACCURACY HEADSHOT TERBAIK</p>
+                </td>
+            </tr>
+        </table>
+
+        <table align="center" border="1" style="margin: 20px auto; background-color: rgba(0,0,0,0.6); color: white;">
+            <tr>
+                <td>
+                    <p style="color: green; font-size: 20px;">APAKAH GOODTRICK AMAN?</p>
+                    <p style="font-size: 18px;">YA, GOODTRICK SENSI YANG DI APLIKASIKAN DI PYDROID3 DAN BREVENT 100% KAMI MENJAMIN KE AMANAN PADA AKUN DAN PRIVASI ANDA</p>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Developer Tables -->
+        <table class="developer-table" align="center">
+            <tr>
+                <td>
+                    <img src="UEEL.jpg" alt="Developer UEEL" class="developer-info">
+                    <p><b style="color:white">DEVELOPER UEELEXITERS</b></p>
+                    <p>DEVELOPER GOODTRICK CLI</p>
+                    <p>DEVELOPER GOODTRICK SHELL BREVENT</p>
+                    <p>DEVELOPER WEBSITE</p>
+                    <p>DEVELOPER BOT TRANSACTION GOODTRICK</p>
+                </td>
+            </tr>
+        </table>
+
+        <table class="developer-table" align="center">
+            <tr>
+                <td>
+                    <img src="xitado.jpg" alt="Developer Xitado" class="developer-info">
+                    <p><b style="color:white">DEVELOPER XITADO</b></p>
+                    <p>OWNER XITADO SENSIXITER</p>
+                    <p>CEO FOUNDER GOODTRICK SENSI</p>
+                </td>
+            </tr>
+        </table>
+
+        <table class="developer-table" align="center">
+            <tr>
+                <td>
+                    <img src="novz.jpg" alt="Developer Novz" class="developer-info">
+                    <p><b style="color:white">DEVELOPER NOVZ</b></p>
+                    <p>DEVELOPER APP GOODTRICK SENSI</p>
+                    <p>DEVELOPER SENSI-X</p>
+                    <p>CEO FOUNDER SENSI-X</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('loading-container').style.display = 'none';
+                document.getElementById('main-content').classList.remove('hidden');
+            }, 3000);
+
+            // Set volume audio
+            const bgAudio = document.getElementById('background-audio');
+            bgAudio.volume = 0.4;
+
+            // Coba paksa play jika autoplay diblokir
+            const playPromise = bgAudio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    console.log("Autoplay diblokir, butuh interaksi user.");
+                });
+            }
+        };
+
+        const canvas = document.getElementById('particle-background');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const maxDist = 150;
+        const totalParticles = 50;
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
+                this.size = 2;
+                this.opacity = 0.8;
+            }
+
+            move() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x <= 0 || this.x >= canvas.width) this.vx *= -1;
+                if (this.y <= 0 || this.y >= canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < totalParticles; i++) {
+            particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.move();
+                p.draw();
+            });
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < maxDist) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - dist / maxDist})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            let mouseX = e.x;
+            let mouseY = e.y;
+            particles.push(new Particle(mouseX, mouseY));
+            if (particles.length > totalParticles) {
+                particles.shift();
+            }
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            let touchX = e.touches[0].pageX;
+            let touchY = e.touches[0].pageY;
+            particles.push(new Particle(touchX, touchY));
+            if (particles.length > totalParticles) {
+                particles.shift();
+            }
+        });
+
+        // Navigasi tombol
+        document.querySelector('.brevent-btn').onclick = function() {
+            window.location.href = 'shell.html';
+        };
+
+        document.querySelector('.cli-btn').onclick = function() {
+            window.location.href = 'cli.html';
+        };
+    </script>
+</body>
+</html>
